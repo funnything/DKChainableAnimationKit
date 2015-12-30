@@ -279,3 +279,28 @@ func DKKeyframeAnimationFunctionEaseInOutBounce(t: Double, b: Double, c: Double,
         return DKKeyframeAnimationFunctionEaseOutBounce(t * 2 - d, b: 0, c: c, d: d) * 0.5 + c * 0.5 + b;
     }
 }
+
+func DKKeyframeAnimationFunctionEaseInSoftBounce(t: Double, b: Double, c: Double, d: Double) -> Double {
+    return c - DKKeyframeAnimationFunctionEaseOutSoftBounce(d - t, b: 0, c: c, d: d) + b;
+}
+
+func DKKeyframeAnimationFunctionEaseOutSoftBounce(var t: Double, b: Double, c: Double, d: Double) -> Double {
+    t /= d
+    if t < 9.0 / 17.0 {
+        return c * (17.0 * 17.0 / 9.0 / 9.0 * t * t) + b;
+    } else if t < 15.0 / 17.0 {
+        t -= 12.0 / 17.0
+        return c * (17.0 * 17.0 / 9.0 / 9.0 * t * t + 1.0 - 1.0 / 9.0) + b;
+    } else {
+        t -= 16.0 / 17.0
+        return c * (17.0 * 17.0 / 9.0 / 9.0 * t * t + 1.0 - 1.0 / 81.0) + b;
+    }
+}
+
+func DKKeyframeAnimationFunctionEaseInOutSoftBounce(t: Double, b: Double, c: Double, d: Double) -> Double {
+    if t < d / 2 {
+        return DKKeyframeAnimationFunctionEaseInSoftBounce (t * 2, b: 0, c: c, d: d) * 0.5 + b;
+    } else {
+        return DKKeyframeAnimationFunctionEaseOutSoftBounce(t * 2 - d, b: 0, c: c, d: d) * 0.5 + c * 0.5 + b;
+    }
+}
