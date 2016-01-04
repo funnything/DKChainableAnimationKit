@@ -25,6 +25,19 @@ extension DKChainableAnimationKit {
         }
     }
     
+    public func transformAbs(transform: CATransform3D) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(CATransform3D: transform)
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = transform
+        }
+        return self
+    }
+    
     public func transformAbsX(x: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
