@@ -132,24 +132,33 @@ extension DKChainableAnimationKit {
         }
         return self
     }
-
-    public func transformScale(scale: CGFloat) -> DKChainableAnimationKit {
+    
+    public func transformAbsScale(scale: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, scale, scale, 1)
             transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(CATransform3D: transform)
+            transformAnimation.toValue = NSValue(CATransform3D: CATransform3DMakeScale(scale, scale, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, scale, scale, 1)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DMakeScale(scale, scale, 1)
         }
         return self
     }
 
+    public func transformRelScale(scale: CGFloat) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(CATransform3D: CATransform3DScale(view.layer.transform, scale, scale, 1))
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DScale(view.layer.transform, scale, scale, 1)
+        }
+        return self
+    }
+    
     public func transformScaleX(scaleX: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
