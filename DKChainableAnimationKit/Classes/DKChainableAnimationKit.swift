@@ -15,8 +15,8 @@ public class DKChainableAnimationKit {
     typealias AnimationCalculationAction = UIView -> Void
     typealias AnimationCompletionAction = UIView -> Void
 
-    internal var animationCalculationActions: [[AnimationCalculationAction]]!
-    internal var animationCompletionActions: [[AnimationCompletionAction]]!
+    internal var animationCalculationActions: [[AnimationCalculationAction]]?
+    internal var animationCompletionActions: [[AnimationCompletionAction]]?
     internal var animationGroups: NSMutableArray!
     internal var animations: [[DKKeyFrameAnimation]]!
     public var animationCompletion: (Void -> Void)?
@@ -37,11 +37,11 @@ public class DKChainableAnimationKit {
     private func clear() {
         self.animations.removeAll()
         self.animationGroups.removeAllObjects()
-        self.animationCompletionActions.removeAll()
-        self.animationCalculationActions.removeAll()
+        self.animationCompletionActions?.removeAll()
+        self.animationCalculationActions?.removeAll()
         self.animations.append([])
-        self.animationCompletionActions.append([AnimationCalculationAction]())
-        self.animationCalculationActions.append([AnimationCompletionAction]())
+        self.animationCompletionActions?.append([AnimationCalculationAction]())
+        self.animationCalculationActions?.append([AnimationCompletionAction]())
         self.animationGroups.addObject(self.basicAnimationGroup())
     }
 
@@ -123,8 +123,8 @@ public class DKChainableAnimationKit {
             let newGroup = self.basicAnimationGroup()
             self.animationGroups.addObject(newGroup)
             self.animations.append([])
-            self.animationCalculationActions.append([])
-            self.animationCompletionActions.append([])
+            self.animationCalculationActions?.append([])
+            self.animationCompletionActions?.append([])
         }
         return self
     }
@@ -165,7 +165,7 @@ public class DKChainableAnimationKit {
 
     private func animateChainLink() {
         self.makeAnchor(0.5, 0.5)
-        if let animationCluster = self.animationCalculationActions.first {
+        if let animationCluster = self.animationCalculationActions?.first {
             for action in animationCluster {
                 action(self.view!)
             }
@@ -187,7 +187,7 @@ public class DKChainableAnimationKit {
             let delayTime = dispatch_time(DISPATCH_TIME_NOW,
                 Int64(delay * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
-                if let actionCluster: [AnimationCompletionAction] = self.animationCompletionActions.first {
+                if let actionCluster: [AnimationCompletionAction] = self.animationCompletionActions?.first {
                     for action in actionCluster {
                         action(self.view!)
                     }
@@ -197,8 +197,8 @@ public class DKChainableAnimationKit {
     }
 
     private func chainLinkDidFinishAnimating() {
-        self.animationCompletionActions.removeAtIndex(0)
-        self.animationCalculationActions.removeAtIndex(0)
+        self.animationCompletionActions?.removeAtIndex(0)
+        self.animationCalculationActions?.removeAtIndex(0)
         self.animations.removeAtIndex(0)
         self.animationGroups.removeObjectAtIndex(0)
 
@@ -215,8 +215,8 @@ public class DKChainableAnimationKit {
 
     private func sanityCheck() {
         assert(self.animations.count == self.animationGroups.count, "FATAL ERROR: ANIMATION GROUPS AND ANIMATIONS ARE OUT OF SYNC");
-        assert(self.animationCalculationActions.count == self.animationCompletionActions.count, "FATAL ERROR: ANIMATION CALCULATION OBJECTS AND ANIMATION COMPLETION OBJECTS ARE OUT OF SYNC");
-        assert(self.animations.count == self.animationCompletionActions.count, "FATAL ERROR: ANIMATIONS AND ANIMATION COMPLETION OBJECTS ARE OUT OF SYNC");
+        assert(self.animationCalculationActions?.count == self.animationCompletionActions?.count, "FATAL ERROR: ANIMATION CALCULATION OBJECTS AND ANIMATION COMPLETION OBJECTS ARE OUT OF SYNC");
+        assert(self.animations.count == self.animationCompletionActions?.count, "FATAL ERROR: ANIMATIONS AND ANIMATION COMPLETION OBJECTS ARE OUT OF SYNC");
     }
 
     // MARK: - Animation Action
@@ -231,18 +231,18 @@ public class DKChainableAnimationKit {
     }
 
     internal func addAnimationCalculationAction(action: AnimationCalculationAction) {
-        if var actions = self.animationCalculationActions.last as [AnimationCalculationAction]? {
+        if var actions = self.animationCalculationActions?.last as [AnimationCalculationAction]? {
             actions.append(action)
-            self.animationCalculationActions.removeLast()
-            self.animationCalculationActions.append(actions)
+            self.animationCalculationActions?.removeLast()
+            self.animationCalculationActions?.append(actions)
         }
     }
 
     internal func addAnimationCompletionAction(action: AnimationCompletionAction) {
-        if var actions = self.animationCompletionActions.last as [AnimationCompletionAction]? {
+        if var actions = self.animationCompletionActions?.last as [AnimationCompletionAction]? {
             actions.append(action)
-            self.animationCompletionActions.removeLast()
-            self.animationCompletionActions.append(actions)
+            self.animationCompletionActions?.removeLast()
+            self.animationCompletionActions?.append(actions)
         }
     }
 
