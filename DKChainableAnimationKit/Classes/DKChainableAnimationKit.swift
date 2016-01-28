@@ -10,7 +10,7 @@ import UIKit
 
 public class DKChainableAnimationKit {
 
-    weak var view: UIView!
+    weak var view: UIView?
 
     typealias AnimationCalculationAction = UIView -> Void
     typealias AnimationCompletionAction = UIView -> Void
@@ -154,7 +154,7 @@ public class DKChainableAnimationKit {
         self.sanityCheck()
         CATransaction.begin()
         CATransaction.setCompletionBlock { () -> Void in
-            self.view.layer.removeAnimationForKey("AnimationChain")
+            self.view?.layer.removeAnimationForKey("AnimationChain")
             self.chainLinkDidFinishAnimating()
         }
         self.animateChainLink()
@@ -167,7 +167,7 @@ public class DKChainableAnimationKit {
         self.makeAnchor(0.5, 0.5)
         if let animationCluster = self.animationCalculationActions.first {
             for action in animationCluster {
-                action(self.view)
+                action(self.view!)
             }
         }
         if let group: CAAnimationGroup = self.animationGroups.firstObject as? CAAnimationGroup,
@@ -177,7 +177,7 @@ public class DKChainableAnimationKit {
                 animation.calculte()
             }
             group.animations = animationCluster
-            self.view.layer.addAnimation(group, forKey: "AnimationChain")
+            self.view!.layer.addAnimation(group, forKey: "AnimationChain")
         }
     }
 
@@ -189,7 +189,7 @@ public class DKChainableAnimationKit {
             dispatch_after(delayTime, dispatch_get_main_queue()) {
                 if let actionCluster: [AnimationCompletionAction] = self.animationCompletionActions.first {
                     for action in actionCluster {
-                        action(self.view)
+                        action(self.view!)
                     }
                 }
             }
@@ -268,15 +268,15 @@ public class DKChainableAnimationKit {
     }
 
     internal func newPositionFrom(newOrigin newOrigin: CGPoint) -> CGPoint {
-        let anchor = self.view.layer.anchorPoint
-        let size = self.view.bounds.size
+        let anchor = self.view!.layer.anchorPoint
+        let size = self.view!.bounds.size
         let newPosition = CGPoint(x: newOrigin.x + anchor.x * size.width, y: newOrigin.y + anchor.y * size.height)
         return newPosition
     }
 
     internal func newPositionFrom(newCenter newCenter: CGPoint) -> CGPoint {
-        let anchor = self.view.layer.anchorPoint
-        let size = self.view.bounds.size
+        let anchor = self.view!.layer.anchorPoint
+        let size = self.view!.bounds.size
         let newPosition = CGPoint(x: newCenter.x + (anchor.x - 0.5) * size.width, y: newCenter.y + (anchor.y - 0.5) * size.height)
         return newPosition
     }
