@@ -39,10 +39,10 @@ public extension DKChainableAnimationKit {
             view.layer.anchorPoint = anchorPoint
         }
 
-        if var lastCalculationActions = self.animationCalculationActions.last {
+        if var lastCalculationActions = self.animationCalculationActions?.last {
             lastCalculationActions.insert(action, atIndex: 0)
-            self.animationCalculationActions.removeLast()
-            self.animationCalculationActions.append(lastCalculationActions)
+            self.animationCalculationActions?.removeLast()
+            self.animationCalculationActions?.append(lastCalculationActions)
         }
     }
 
