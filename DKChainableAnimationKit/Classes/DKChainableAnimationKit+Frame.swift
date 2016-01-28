@@ -120,19 +120,19 @@ public extension DKChainableAnimationKit {
     }
 
     public func makeCenterX(x: CGFloat) -> DKChainableAnimationKit {
-        return self.makeX(x - view.bounds.size.width / 2)
+        return makeX(x - view!.bounds.size.width / 2)
     }
 
     public func makeCenterY(y: CGFloat) -> DKChainableAnimationKit {
-        return self.makeY(y - view.bounds.size.height / 2)
+        return makeY(y - view!.bounds.size.height / 2)
     }
 
     public func makeWidth(width: CGFloat) -> DKChainableAnimationKit {
-        return self.makeSize(width, self.view.layer.frame.size.height)
+        return makeSize(width, view!.layer.frame.size.height)
     }
 
     public func makeHeight(height: CGFloat) -> DKChainableAnimationKit {
-        return self.makeSize(self.view.layer.frame.size.width, height)
+        return makeSize(view!.layer.frame.size.width, height)
     }
 
     public func makeScale(scale: CGFloat) -> DKChainableAnimationKit {
