@@ -14,6 +14,7 @@ extension DKChainableAnimationKit {
         get {
             self.addAnimationCalculationAction { (view: UIView) -> Void in
                 let transformAnimation = self.basicAnimationForKeyPath("transform")
+                transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
                 transformAnimation.toValue = NSValue(CATransform3D: CATransform3DIdentity)
                 self.addAnimationFromCalculationBlock(transformAnimation)
             }
@@ -40,6 +41,7 @@ extension DKChainableAnimationKit {
     public func transformAbsX(x: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DMakeTranslation(x, 0, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -52,6 +54,7 @@ extension DKChainableAnimationKit {
     public func transformAbsY(y: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DMakeTranslation(0, y, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -90,6 +93,7 @@ extension DKChainableAnimationKit {
     public func transformRelY(y: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DTranslate(view.layer.transform, 0, y, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -102,6 +106,7 @@ extension DKChainableAnimationKit {
     public func transformRelZ(z: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DTranslate(view.layer.transform, 0, 0, z))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -114,6 +119,7 @@ extension DKChainableAnimationKit {
     public func transformXY(x: CGFloat, _ y: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DTranslate(view.layer.transform, x, y, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -126,6 +132,7 @@ extension DKChainableAnimationKit {
     public func transformAbsScale(scale: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DMakeScale(scale, scale, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -138,6 +145,7 @@ extension DKChainableAnimationKit {
     public func transformRelScale(scale: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DScale(view.layer.transform, scale, scale, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -150,6 +158,7 @@ extension DKChainableAnimationKit {
     public func transformScaleX(scaleX: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DScale(view.layer.transform, scaleX, 1, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -162,6 +171,7 @@ extension DKChainableAnimationKit {
     public func transformScaleY(scaleY: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(CATransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(CATransform3D: CATransform3DScale(view.layer.transform, 1, scaleY, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
@@ -174,6 +184,9 @@ extension DKChainableAnimationKit {
     public func rotateAbs(angle: Double) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let rotationAnimation = self.basicAnimationForKeyPath("transform.rotation")
+            let transform = view.layer.transform
+            let srcAngle = Double(atan2(transform.m12, transform.m11))
+            rotationAnimation.fromValue = srcAngle
             rotationAnimation.toValue = angle
             self.addAnimationFromCalculationBlock(rotationAnimation)
         }
@@ -189,6 +202,7 @@ extension DKChainableAnimationKit {
             let rotationAnimation = self.basicAnimationForKeyPath("transform.rotation")
             let transform = view.layer.transform
             let srcAngle = Double(atan2(transform.m12, transform.m11))
+            rotationAnimation.fromValue = srcAngle
             rotationAnimation.toValue = srcAngle + angle
             self.addAnimationFromCalculationBlock(rotationAnimation)
         }
