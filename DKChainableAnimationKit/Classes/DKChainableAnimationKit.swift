@@ -161,9 +161,9 @@ public class DKChainableAnimationKit {
 
     private func animateChainLink() {
         self.makeAnchor(0.5, 0.5)
-        if let animationCluster = self.animationCalculationActions?.first {
+        if let animationCluster = self.animationCalculationActions?.first, view = self.view {
             for action in animationCluster {
-                action(self.view!)
+                action(view)
             }
         }
         if let group: CAAnimationGroup = self.animationGroups.firstObject as? CAAnimationGroup,
@@ -173,19 +173,18 @@ public class DKChainableAnimationKit {
                 animation.calculte()
             }
             group.animations = animationCluster
-            self.view!.layer.addAnimation(group, forKey: "AnimationChain")
+            self.view?.layer.addAnimation(group, forKey: "AnimationChain")
         }
     }
 
     private func executeCompletionActions() {
         if let group = self.animationGroups.firstObject as? CAAnimationGroup {
             let delay = max(group.beginTime - CACurrentMediaTime(), 0.0)
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC)))
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
-                if let actionCluster: [AnimationCompletionAction] = self.animationCompletionActions?.first {
+                if let actionCluster: [AnimationCompletionAction] = self.animationCompletionActions?.first, view = self.view {
                     for action in actionCluster {
-                        action(self.view!)
+                        action(view)
                     }
                 }
             }
