@@ -146,10 +146,6 @@ open class DKChainableAnimationKit {
         return animateWithCompletion(TimeInterval(duration), completion)
     }
 
-    internal func degreesToRadians(_ degree: Double) -> Double {
-        return (degree / 180.0) * M_PI
-    }
-
     fileprivate func animateChain() {
         self.sanityCheck()
         CATransaction.begin()

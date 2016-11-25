@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         _ = UIColor.purple
         let green = UIColor.green
 
-        v.animation.moveX(100).thenAfter(1.0).moveWidth(50).bounce.makeBackground(green).easeIn.anchorTopLeft.thenAfter(0.5).rotate(95).easeBack.thenAfter(0.5).moveY(300).easeIn.makeOpacity(0.0).animateWithCompletion(0.4, {
+        v.animation.moveX(100).thenAfter(1.0).moveWidth(50).bounce.makeBackground(green).easeIn.anchorTopLeft.thenAfter(0.5).rotateRel(95).easeBack.thenAfter(0.5).moveY(300).easeIn.makeOpacity(0.0).animateWithCompletion(0.4, {
             self.v.layer.transform = CATransform3DMakeRotation(0, 0, 0, 1)
             self.v.frame = CGRect(x: 100, y: 150, width: 50, height: 50)
             self.v.animation.makeOpacity(1.0).makeBackground(UIColor.blue).animate(1.0)

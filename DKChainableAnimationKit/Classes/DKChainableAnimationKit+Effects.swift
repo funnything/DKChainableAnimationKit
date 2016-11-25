@@ -262,5 +262,47 @@ public extension DKChainableAnimationKit {
             return self
         }
     }
+    
+    public var easeInSoftBounce: DKChainableAnimationKit {
+        get {
+            self.addAnimationKeyframeCalculation(DKKeyframeAnimationFunctionEaseInSoftBounce)
+            return self
+        }
+    }
+    
+    public var easeOutSoftBounce: DKChainableAnimationKit {
+        get {
+            self.addAnimationKeyframeCalculation(DKKeyframeAnimationFunctionEaseOutSoftBounce)
+            return self
+        }
+    }
+    
+    public var easeInOutSoftBounce: DKChainableAnimationKit {
+        get {
+            self.addAnimationKeyframeCalculation(DKKeyframeAnimationFunctionEaseInOutSoftBounce)
+            return self
+        }
+    }
+    
+    public var easeInWeakBounce: DKChainableAnimationKit {
+        get {
+            self.addAnimationKeyframeCalculation(DKKeyframeAnimationFunctionEaseInWeakBounce)
+            return self
+        }
+    }
+    
+    public var easeOutWeakBounce: DKChainableAnimationKit {
+        get {
+            self.addAnimationKeyframeCalculation(DKKeyframeAnimationFunctionEaseOutWeakBounce)
+            return self
+        }
+    }
+    
+    public var easeInOutWeakBounce: DKChainableAnimationKit {
+        get {
+            self.addAnimationKeyframeCalculation(DKKeyframeAnimationFunctionEaseInOutWeakBounce)
+            return self
+        }
+    }
 
 }

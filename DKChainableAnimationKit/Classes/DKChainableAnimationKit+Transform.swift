@@ -14,66 +14,104 @@ extension DKChainableAnimationKit {
         get {
             self.addAnimationCalculationAction { (view: UIView) -> Void in
                 let transformAnimation = self.basicAnimationForKeyPath("transform")
-                let transform = CATransform3DIdentity
                 transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-                transformAnimation.toValue = NSValue(caTransform3D: transform)
+                transformAnimation.toValue = NSValue(caTransform3D: CATransform3DIdentity)
                 self.addAnimationFromCalculationBlock(transformAnimation)
             }
             self.addAnimationCompletionAction { (view: UIView) -> Void in
-                let transform = CATransform3DIdentity
-                view.layer.transform = transform
+                view.layer.transform = CATransform3DIdentity
             }
             return self
         }
     }
 
-    public func transformX(_ x: CGFloat) -> DKChainableAnimationKit {
+    public func transformAbs(_ transform: CATransform3D) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, x, 0, 0)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
             transformAnimation.toValue = NSValue(caTransform3D: transform)
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, x, 0, 0)
             view.layer.transform = transform
         }
         return self
     }
-
-    public func transformY(_ y: CGFloat) -> DKChainableAnimationKit {
+    
+    public func transformAbsX(_ x: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, 0, y, 0)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(caTransform3D: transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DMakeTranslation(x, 0, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, 0, y, 0)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DMakeTranslation(x, 0, 0)
         }
         return self
     }
-
-    public func transformZ(_ z: CGFloat) -> DKChainableAnimationKit {
+    
+    public func transformAbsY(_ y: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, 0, 0, z)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(caTransform3D: transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DMakeTranslation(0, y, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, 0, 0, z)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DMakeTranslation(0, y, 0)
+        }
+        return self
+    }
+    
+    public func transformAbsZ(_ z: CGFloat) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DMakeTranslation(0, 0, z))
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DMakeTranslation(0, 0, z)
+        }
+        return self
+    }
+    
+    public func transformRelX(_ x: CGFloat) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DTranslate(view.layer.transform, x, 0, 0))
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DTranslate(view.layer.transform, x, 0, 0)
+        }
+        return self
+    }
+    
+    public func transformRelY(_ y: CGFloat) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DTranslate(view.layer.transform, 0, y, 0))
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DTranslate(view.layer.transform, 0, y, 0)
+        }
+        return self
+    }
+    
+    public func transformRelZ(_ z: CGFloat) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DTranslate(view.layer.transform, 0, 0, z))
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DTranslate(view.layer.transform, 0, 0, z)
         }
         return self
     }
@@ -81,33 +119,38 @@ extension DKChainableAnimationKit {
     public func transformXY(_ x: CGFloat, _ y: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, x, y, 0)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(caTransform3D: transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DTranslate(view.layer.transform, x, y, 0))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DTranslate(transform, x, y, 0)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DTranslate(view.layer.transform, x, y, 0)
         }
         return self
     }
-
-    public func transformScale(_ scale: CGFloat) -> DKChainableAnimationKit {
+    
+    public func transformAbsScale(_ scale: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, scale, scale, 1)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(caTransform3D: transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DMakeScale(scale, scale, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, scale, scale, 1)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DMakeScale(scale, scale, 1)
+        }
+        return self
+    }
+    
+    public func transformRelScale(_ scale: CGFloat) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let transformAnimation = self.basicAnimationForKeyPath("transform")
+            transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DScale(view.layer.transform, scale, scale, 1))
+            self.addAnimationFromCalculationBlock(transformAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DScale(view.layer.transform, scale, scale, 1)
         }
         return self
     }
@@ -115,52 +158,58 @@ extension DKChainableAnimationKit {
     public func transformScaleX(_ scaleX: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, scaleX, 1, 1)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(caTransform3D: transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DScale(view.layer.transform, scaleX, 1, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, scaleX, 1, 1)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DScale(view.layer.transform, scaleX, 1, 1)
         }
         return self
     }
-
+    
     public func transformScaleY(_ scaleY: CGFloat) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let transformAnimation = self.basicAnimationForKeyPath("transform")
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, 1, scaleY, 1)
             transformAnimation.fromValue = NSValue(caTransform3D: view.layer.transform)
-            transformAnimation.toValue = NSValue(caTransform3D: transform)
+            transformAnimation.toValue = NSValue(caTransform3D: CATransform3DScale(view.layer.transform, 1, scaleY, 1))
             self.addAnimationFromCalculationBlock(transformAnimation)
         }
         self.addAnimationCompletionAction { (view: UIView) -> Void in
-            var transform = view.layer.transform
-            transform = CATransform3DScale(transform, 1, scaleY, 1)
-            view.layer.transform = transform
+            view.layer.transform = CATransform3DScale(view.layer.transform, 1, scaleY, 1)
+        }
+        return self
+    }
+    
+    public func rotateAbs(_ angle: Double) -> DKChainableAnimationKit {
+        self.addAnimationCalculationAction { (view: UIView) -> Void in
+            let rotationAnimation = self.basicAnimationForKeyPath("transform.rotation")
+            let transform = view.layer.transform
+            let srcAngle = Double(atan2(transform.m12, transform.m11))
+            rotationAnimation.fromValue = NSNumber(value: srcAngle)
+            rotationAnimation.toValue = NSNumber(value: angle)
+            self.addAnimationFromCalculationBlock(rotationAnimation)
+        }
+        self.addAnimationCompletionAction { (view: UIView) -> Void in
+            view.layer.transform = CATransform3DMakeRotation(CGFloat(angle), 0, 0, 1)
         }
         return self
     }
 
-    public func rotate(_ angle: Double) -> DKChainableAnimationKit {
+    public func rotateRel(_ angle: Double) -> DKChainableAnimationKit {
         self.addAnimationCalculationAction { (view: UIView) -> Void in
             let rotationAnimation = self.basicAnimationForKeyPath("transform.rotation")
             let transform = view.layer.transform
-            let originalRotation = Double(atan2(transform.m12, transform.m11))
-            rotationAnimation.fromValue = originalRotation as AnyObject!
-            rotationAnimation.toValue = (originalRotation + self.degreesToRadians(angle)) as AnyObject!
+            let srcAngle = Double(atan2(transform.m12, transform.m11))
+            rotationAnimation.fromValue = NSNumber(value: srcAngle)
+            rotationAnimation.toValue = NSNumber(value: srcAngle + angle)
             self.addAnimationFromCalculationBlock(rotationAnimation)
         }
 
         self.addAnimationCompletionAction { (view: UIView) -> Void in
             let transform = view.layer.transform
-            let originalRotation = Double(atan2(transform.m12, transform.m11))
-            let zRotation = CATransform3DMakeRotation(CGFloat(self.degreesToRadians(angle) + originalRotation), 0.0, 0.0, 1.0)
-            view.layer.transform = zRotation
+            let srcAngle = Double(atan2(transform.m12, transform.m11))
+            view.layer.transform = CATransform3DMakeRotation(CGFloat(srcAngle + angle), 0, 0, 1)
         }
         return self
     }

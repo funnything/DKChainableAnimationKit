@@ -281,3 +281,54 @@ func DKKeyframeAnimationFunctionEaseInOutBounce(_ t: Double, b: Double, c: Doubl
         return DKKeyframeAnimationFunctionEaseOutBounce(t * 2 - d, b: 0, c: c, d: d) * 0.5 + c * 0.5 + b;
     }
 }
+
+func DKKeyframeAnimationFunctionEaseInSoftBounce(_ t: Double, b: Double, c: Double, d: Double) -> Double {
+    return c - DKKeyframeAnimationFunctionEaseOutSoftBounce(d - t, b: 0, c: c, d: d) + b;
+}
+
+func DKKeyframeAnimationFunctionEaseOutSoftBounce(_ t: Double, b: Double, c: Double, d: Double) -> Double {
+    var t = t / d
+    if t < 9.0 / 17.0 {
+        return c * (17.0 * 17.0 / 9.0 / 9.0 * t * t) + b;
+    } else if t < 15.0 / 17.0 {
+        t -= 12.0 / 17.0
+        return c * (17.0 * 17.0 / 9.0 / 9.0 * t * t + 1.0 - 1.0 / 9.0) + b;
+    } else {
+        t -= 16.0 / 17.0
+        return c * (17.0 * 17.0 / 9.0 / 9.0 * t * t + 1.0 - 1.0 / 81.0) + b;
+    }
+}
+
+func DKKeyframeAnimationFunctionEaseInOutSoftBounce(_ t: Double, b: Double, c: Double, d: Double) -> Double {
+    if t < d / 2 {
+        return DKKeyframeAnimationFunctionEaseInSoftBounce (t * 2, b: 0, c: c, d: d) * 0.5 + b;
+    } else {
+        return DKKeyframeAnimationFunctionEaseOutSoftBounce(t * 2 - d, b: 0, c: c, d: d) * 0.5 + c * 0.5 + b;
+    }
+}
+
+func DKKeyframeAnimationFunctionEaseInWeakBounce(_ t: Double, b: Double, c: Double, d: Double) -> Double {
+    return c - DKKeyframeAnimationFunctionEaseOutWeakBounce(d - t, b: 0, c: c, d: d) + b;
+}
+
+func DKKeyframeAnimationFunctionEaseOutWeakBounce(_ t: Double, b: Double, c: Double, d: Double) -> Double {
+    var t = t / d
+    if t < 8.0 / 13.0 {
+        return c * (13.0 * 13.0 / 8.0 / 8.0 * t * t) + b;
+    } else if t < 12.0 / 13.0 {
+        t -= 10.0 / 13.0
+        return c * (13.0 * 13.0 / 8.0 / 8.0 * t * t + 1.0 - 1.0 / 16.0) + b;
+    } else {
+        t -= 12.5 / 13.0
+        return c * (13.0 * 13.0 / 8.0 / 8.0 * t * t + 1.0 - 1.0 / 256.0) + b;
+    }
+}
+
+func DKKeyframeAnimationFunctionEaseInOutWeakBounce(_ t: Double, b: Double, c: Double, d: Double) -> Double {
+    if t < d / 2 {
+        return DKKeyframeAnimationFunctionEaseInWeakBounce (t * 2, b: 0, c: c, d: d) * 0.5 + b;
+    } else {
+        return DKKeyframeAnimationFunctionEaseOutWeakBounce(t * 2 - d, b: 0, c: c, d: d) * 0.5 + c * 0.5 + b;
+    }
+}
+

@@ -270,9 +270,8 @@ public extension DKChainableAnimationKit {
     }
 
     public func movePolar(_ radius: Double, _ angle: Double) -> DKChainableAnimationKit {
-        let radians  = self.degreesToRadians(angle)
-        let x = CGFloat(radius * cos(radians))
-        let y = CGFloat(-radius * sin(radians))
+        let x = CGFloat(radius * cos(angle))
+        let y = CGFloat(-radius * sin(angle))
         return self.moveXY(x, y)
     }
 }
