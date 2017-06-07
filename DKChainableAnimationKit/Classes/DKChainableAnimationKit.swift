@@ -148,15 +148,26 @@ open class DKChainableAnimationKit {
 
     fileprivate func animateChain() {
         self.sanityCheck()
+
+        var counter = 0
+        let semaphore = {
+            counter -= 1
+            if counter == 0 {
+                self.view?.layer.removeAnimation(forKey: "AnimationChain")
+                self.chainLinkDidFinishAnimating()
+            }
+        }
+        
         CATransaction.begin()
+        counter += 1
         CATransaction.setCompletionBlock { () -> Void in
-            self.view?.layer.removeAnimation(forKey: "AnimationChain")
-            self.chainLinkDidFinishAnimating()
+            semaphore()
         }
         self.animateChainLink()
         CATransaction.commit()
 
-        self.executeCompletionActions()
+        counter += 1
+        self.executeCompletionActions(semaphore)
     }
 
     fileprivate func animateChainLink() {
@@ -177,7 +188,7 @@ open class DKChainableAnimationKit {
         }
     }
 
-    fileprivate func executeCompletionActions() {
+    fileprivate func executeCompletionActions(_ completion: @escaping () -> ()) {
         if let group = self.animationGroups.firstObject as? CAAnimationGroup {
             let delay = max(group.beginTime - CACurrentMediaTime(), 0.0)
             let delayTime = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -189,7 +200,10 @@ open class DKChainableAnimationKit {
                             action(view)
                         }
                 }
+                completion()
             }
+        } else {
+            completion()
         }
     }
 
